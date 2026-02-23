@@ -1,0 +1,4 @@
+1.How to open the browser manually in Playwright?
+2.What is auto-waiting in Playwright?
+
+
