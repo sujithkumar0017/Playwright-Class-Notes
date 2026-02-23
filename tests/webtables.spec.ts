@@ -103,3 +103,17 @@ test("Should display record not found text if try to search with invalid user em
     await page.getByPlaceholder("Search Name or Email").fill(email)
     await expect(page.locator('//td[contains(text(),"No records found")]')).toContainText("No records found")    
 })
+
+test.only("Should work the sorting using id as expected",async({page})=>{
+
+    await page.goto("/webtable")
+    const getValues = await page.locator('//table[@id="webtable"]//tbody//tr//td[1]').allTextContents()
+    const actualValues = [...getValues].sort()
+    console.log(actualValues)
+    const sortButton =  page.locator('//button[contains(text(),"Sort by ID ")]')
+    await sortButton.click()
+    const sortedValues = await page.locator('//table[@id="webtable"]//tbody//tr//td[1]').allTextContents()
+    const expectedValues = [...sortedValues]
+    console.log(expectedValues)
+    expect(expectedValues).toEqual(actualValues)
+})
