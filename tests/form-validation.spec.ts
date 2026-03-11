@@ -3,7 +3,7 @@ import {test} from '@playwright/test';
 
 
 test("Should display a validate error toast for first name field left empty", async({page})=>{
-    await page.goto('/');
+    await page.goto('https://playground.bsparksoftwaretechnologies.com/web-automation');
     await page.locator('.Home_title__ANWNn').first().click();
     await page.locator("//span[text()='FORM VALIDATION']").click()
     await page.locator("#bst_007").click()
@@ -18,7 +18,7 @@ test("Should display a validate error toast for first name field left empty", as
 })
 
 test("Should display the correct placeholder each input field", async({page})=>{
-    await page.goto("/")
+    await page.goto("https://playground.bsparksoftwaretechnologies.com/web-automation")
     await page.locator('.Home_title__ANWNn').first().click();
     await page.locator("//span[text()='FORM VALIDATION']").click()
     const firstname = await page.locator("#bst_001").getAttribute("placeholder")
@@ -34,7 +34,7 @@ test("Should display the correct placeholder each input field", async({page})=>{
 })
 
 test('Should able to enter valid data and submit the form successfully', async({page})=>{
-    await page.goto("/")
+    await page.goto("https://playground.bsparksoftwaretechnologies.com/web-automation")
     await page.locator('.Home_title__ANWNn').first().click();
     await page.locator("//span[text()='FORM VALIDATION']").click()
     await page.locator("#bst_001").fill("sujith")
