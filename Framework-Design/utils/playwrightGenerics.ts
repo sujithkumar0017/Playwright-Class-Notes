@@ -1,9 +1,13 @@
 import { Locator, Page, TestInfo } from "@playwright/test";
-import { LoadFnOutput } from "node:module";
 
 
 export class playwrightGenerics
 {
+    readonly page: Page;
+    constructor(page: Page)
+    {
+        this.page = page
+    }
 
     //Inputbox - type, clear, placeholder, default text
     async enterText(ele: Locator, valueToEnter:string): Promise<void>
@@ -29,7 +33,7 @@ export class playwrightGenerics
 
     async clickElement(ele: Locator): Promise<void>
     {
-        ele.click()
+        await ele.click()
         console.log("Element clciked");
     }
 
@@ -52,6 +56,10 @@ export class playwrightGenerics
         return alltext
     }
 
+    // checkbox
+    async checkbox(ele:Locator): Promise<void>{
+        await ele.check()
+    }
     //dropdown 
     async selectDropdownByText(ele:Locator,value:any): Promise<void>{
         await ele.selectOption(value)
@@ -66,18 +74,18 @@ export class playwrightGenerics
     //Have some doubt on this method creation.
 
     //alerts
-    async getMessageFromAlert(page:Page){
-        page.once("dialog",async(dialog)=>{
+    async getMessageFromAlert(){
+        this.page.once("dialog",async(dialog)=>{
             return dialog.message()
         })
     }
-    async acceptTheAlert(page:Page): Promise<void>{
-        page.once("dialog",async(dialog)=>{
+    async acceptTheAlert(): Promise<void>{
+        this.page.once("dialog",async(dialog)=>{
             await dialog.accept()
     })
 }
-    async dismissTheAlert(page:Page): Promise<void>{
-        page.once("dialog",async(dialog)=>{
+    async dismissTheAlert(): Promise<void>{
+        this.page.once("dialog",async(dialog)=>{
             await dialog.dismiss()
         })
 
@@ -112,8 +120,8 @@ export class playwrightGenerics
 
     //screeshot - ele and page
 
-    async fullPageScreenshot(page:Page,filename:string): Promise<void>{
-        await page.screenshot({ path: `screenshots/${filename}.png`, fullPage: true });
+    async fullPageScreenshot(filename:string): Promise<void>{
+        await this.page.screenshot({ path: `screenshots/${filename}.png`, fullPage: true });
     }
 
     async elementScreenshot(ele:Locator ,filename:string): Promise<void>{
@@ -122,25 +130,25 @@ export class playwrightGenerics
     
     //browser commands - back, frwd, refresh, close, getTitle, url, navigateTo
 
-    async browserBack(page:Page): Promise<void>{
-        await page.goBack()
+    async browserBack(): Promise<void>{
+        await this.page.goBack()
     }
-    async browserForward(page:Page): Promise<void>{
-        await page.goForward()
+    async browserForward(): Promise<void>{
+        await this.page.goForward()
     }
-    async browserClose(page:Page): Promise<void>{
-        await page.close()
+    async browserClose(): Promise<void>{
+        await this.page.close()
     }
-    async pageRefresh(page:Page): Promise<void>{
-        await page.reload()
+    async pageRefresh(): Promise<void>{
+        await this.page.reload()
     }
-    async pageGetTitle(page:Page): Promise<String>{
-        return await page.title()
+    async pageGetTitle(): Promise<String>{
+        return await this.page.title()
     }
-    getPageUrl(page:Page){
-        return page.url()
+    getPageUrl(){
+        return this.page.url()
     }
-    async navigateTo(page:Page,url:string):Promise<void>{
-        await page.goto(url)
+    async navigateTo(url:string):Promise<void>{
+        await this.page.goto(url)
     }
 }
